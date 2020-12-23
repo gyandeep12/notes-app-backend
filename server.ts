@@ -1,4 +1,5 @@
 import { Application, Router } from "https://deno.land/x/oak/mod.ts";
+import { oakCors } from "https://deno.land/x/cors/mod.ts";
 import {getNotes, createNote, getSingleNote, updateNote, deleteNote} from './routes.ts';
 
 const router = new Router();
@@ -17,6 +18,11 @@ router
 const app = new Application();
 app.use(router.routes());
 app.use(router.allowedMethods());
+app.use(
+    oakCors({
+      origin: "http://localhost:3000"
+    }),
+);
 
 app.listen({port: 4000});
 console.log("Server is up and running on " + port);
